@@ -46,6 +46,11 @@ public class ProdriversAPI extends JavaPlugin implements Listener {
 			this.server.registerHandler( endpoint, handler );
 	}
 
+	public void unregisterHandler( String endpoint ) {
+		if( this.server != null )
+			this.server.unregisterHandler( endpoint );
+	}
+
 	private void initServer() {
 		if( this.server != null )
 			return;
