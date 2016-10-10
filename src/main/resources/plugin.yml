@@ -1,5 +1,5 @@
 name: ProdriversAPI
-main: fr.horgeon.prodrivers.api.Main
+main: fr.horgeon.prodrivers.api.ProdriversAPI
 version: 1.0
 
 commands:

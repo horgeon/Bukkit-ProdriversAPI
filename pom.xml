@@ -79,7 +79,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>fr.horgeon.prodrivers.api.Main</mainClass>
+							<mainClass>fr.horgeon.prodrivers.api.ProdriversAPI</mainClass>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>./ProdriversAPI/libs/</classpathPrefix>
 						</manifest>

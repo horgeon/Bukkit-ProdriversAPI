@@ -1,5 +1,6 @@
 package fr.horgeon.prodrivers.api;
 
+import fr.horgeon.apiserver.HTTPHandler;
 import fr.horgeon.apiserver.HTTPServer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -10,7 +11,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.logging.Logger;
 
-public class Main extends JavaPlugin implements Listener {
+public class ProdriversAPI extends JavaPlugin implements Listener {
 	private Chat chat;
 	private Configuration config;
 	private HTTPServer server;
@@ -40,7 +41,12 @@ public class Main extends JavaPlugin implements Listener {
 		initServer();
 	}
 
-	public void initServer() {
+	public void registerHandler( String endpoint, HTTPHandler handler ) {
+		if( this.server != null )
+			this.server.registerHandler( endpoint, handler );
+	}
+
+	private void initServer() {
 		if( this.server != null )
 			return;
 
@@ -65,7 +71,7 @@ public class Main extends JavaPlugin implements Listener {
 		}, 1L );
 	}
 
-	public boolean createServer() {
+	private boolean createServer() {
 		try {
 			if( this.server == null ) {
 				this.server = new HTTPServer( this.config.getInt( "port" ) );
@@ -79,7 +85,7 @@ public class Main extends JavaPlugin implements Listener {
 		return true;
 	}
 
-	public void startServer() {
+	private void startServer() {
 		try {
 			if( this.server != null ) {
 				this.server.start();
@@ -91,7 +97,7 @@ public class Main extends JavaPlugin implements Listener {
 		}
 	}
 
-	public void stopServer() {
+	private void stopServer() {
 		try {
 			if( this.server != null ) {
 				this.server.stop();
@@ -104,11 +110,11 @@ public class Main extends JavaPlugin implements Listener {
 		}
 	}
 
-	public void loadKeys() {
+	private void loadKeys() {
 		this.server.setKeys( this.config.getKeys() );
 	}
 
-	public void startCommand( CommandSender sender ) {
+	private void startCommand( CommandSender sender ) {
 		if( sender.hasPermission( "prodriversapi.start" ) ) {
 			if( this.server != null ) {
 				chat.error( sender, this.config.getMessage( "serveralreadystarted" ) );
@@ -122,7 +128,7 @@ public class Main extends JavaPlugin implements Listener {
 		}
 	}
 
-	public void stopCommand( CommandSender sender ) {
+	private void stopCommand( CommandSender sender ) {
 		if( sender.hasPermission( "prodriversapi.stop" ) ) {
 			if( this.server == null ) {
 				chat.error( sender, this.config.getMessage( "serveralreadystopped" ) );
@@ -136,7 +142,7 @@ public class Main extends JavaPlugin implements Listener {
 		}
 	}
 
-	public void restartCommand( CommandSender sender ) {
+	private void restartCommand( CommandSender sender ) {
 		if( sender.hasPermission( "prodriversapi.restart" ) ) {
 			if( this.server != null ) {
 				stopServer();
@@ -153,7 +159,7 @@ public class Main extends JavaPlugin implements Listener {
 		}
 	}
 
-	public void reloadCommand( CommandSender sender ) {
+	private void reloadCommand( CommandSender sender ) {
 		if( sender.hasPermission( "prodriversapi.reload" ) ) {
 			this.config.reload();
 
@@ -163,7 +169,7 @@ public class Main extends JavaPlugin implements Listener {
 		}
 	}
 
-	public void addKeyCommand( CommandSender sender ) {
+	private void addKeyCommand( CommandSender sender ) {
 		if( sender.hasPermission( "prodriversapi.addkey" ) ) {
 			String publicKey = this.config.addKey();
 
