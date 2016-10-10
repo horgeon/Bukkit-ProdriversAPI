@@ -101,11 +101,26 @@ public class ProdriversAPI extends JavaPlugin implements Listener {
 		try {
 			if( this.server != null ) {
 				this.server.stop();
+
 				this.logger.info( "HTTP Server stopped." );
-				this.server = null;
 			}
 		} catch( Exception e ) {
 			this.logger.severe( "The HTTP server couldn't be stopped! It is highly recommended to restart the server." );
+			e.printStackTrace();
+		}
+	}
+
+	private void restartServer() {
+		try {
+			if( this.server != null ) {
+				if( this.server.isStarted() )
+					this.server.restart();
+				else
+					this.server.start();
+				this.logger.info( String.format( "HTTP Server restarted, now listening on port %d.", this.server.port ) );
+			}
+		} catch( Exception e ) {
+			this.logger.severe( "The HTTP server couldn't be restarted! It is highly recommended to restart the server." );
 			e.printStackTrace();
 		}
 	}
@@ -117,11 +132,27 @@ public class ProdriversAPI extends JavaPlugin implements Listener {
 	private void startCommand( CommandSender sender ) {
 		if( sender.hasPermission( "prodriversapi.start" ) ) {
 			if( this.server != null ) {
-				chat.error( sender, this.config.getMessage( "serveralreadystarted" ) );
-			} else {
-				initServer();
+				if( this.server.isStarted() ) {
+					chat.error( sender, this.config.getMessage( "serveralreadystarted" ) );
+				} else {
+					try {
+						startServer();
 
-				chat.success( sender, this.config.getMessage( "serverstarted" ) );
+						chat.success( sender, this.config.getMessage( "serverstarted" ) );
+					} catch( Exception e ) {
+						chat.error( sender, this.config.getMessage( "errorocurred" ) );
+						chat.error( sender, e.getLocalizedMessage() );
+					}
+				}
+			} else {
+				try {
+					initServer();
+
+					chat.success( sender, this.config.getMessage( "serverstarted" ) );
+				} catch( Exception e ) {
+					chat.error( sender, this.config.getMessage( "errorocurred" ) );
+					chat.error( sender, e.getLocalizedMessage() );
+				}
 			}
 		} else {
 			chat.error( sender, this.config.getMessage( "nopermission" ) );
@@ -130,10 +161,17 @@ public class ProdriversAPI extends JavaPlugin implements Listener {
 
 	private void stopCommand( CommandSender sender ) {
 		if( sender.hasPermission( "prodriversapi.stop" ) ) {
-			if( this.server == null ) {
+			if( ( this.server == null ) || ( !this.server.isStarted() ) ) {
 				chat.error( sender, this.config.getMessage( "serveralreadystopped" ) );
 			} else {
-				stopServer();
+				try {
+					stopServer();
+
+					chat.success( sender, this.config.getMessage( "serverstopped" ) );
+				} catch( Exception e ) {
+					chat.error( sender, this.config.getMessage( "errorocurred" ) );
+					chat.error( sender, e.getLocalizedMessage() );
+				}
 
 				chat.success( sender, this.config.getMessage( "serverstopped" ) );
 			}
@@ -145,14 +183,14 @@ public class ProdriversAPI extends JavaPlugin implements Listener {
 	private void restartCommand( CommandSender sender ) {
 		if( sender.hasPermission( "prodriversapi.restart" ) ) {
 			if( this.server != null ) {
-				stopServer();
-			}
+				try {
+					restartServer();
 
-			if( this.server == null ) {
-				initServer();
-				chat.success( sender, this.config.getMessage( "serverrestarted" ) );
-			} else {
-				chat.error( sender, this.config.getMessage( "serveralreadystarted" ) );
+					chat.success( sender, this.config.getMessage( "serverrestarted" ) );
+				} catch( Exception e ) {
+					chat.error( sender, this.config.getMessage( "errorocurred" ) );
+					chat.error( sender, e.getLocalizedMessage() );
+				}
 			}
 		} else {
 			chat.error( sender, this.config.getMessage( "nopermission" ) );
