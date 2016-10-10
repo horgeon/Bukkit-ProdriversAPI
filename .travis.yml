@@ -29,7 +29,7 @@ deploy:
   provider: releases
   api_key:
     secure: lLWCrJxwo7v4kqhBZdxNtr9LSkbbodB36m6I7sctc6kSSVxRIUldSSXN4lxjYuoe/jCnu7FPRFNox3WlYZgx4IWebStozar7pW+oDDg6gzn8G9GwQPja5ocwH189MNZSRsLEA1oAi7UCjWKioRsRgOkxYRu8B1gMDmOdz3eZkRdfcROw0XOoqOOD0cycirgBoePj567K8w1sV/LnvR4pNRJFUtSxjkc++rymwgUaoiTpnEffq65HirsLfwVzOrj9f0mlpeZigGLoDoR26k0ToaQ9ok5tWhFxA7roQo3jb3A1+73p5np1jg1OcPjfjYaJO1az82+/yQ1qZDMtYcb3nLmURUeCreR7Gq63nrd0Y8u0WdsxNvNFic0zKPeJFC8OlanxrtnegfJuwz1wlSwH2R8+W+j6Kn0ITR+isMEN6ksv7v0sdBtqCa3G/OiOJUnWf/7BcFSg3U+wk/9VCfC223OuA1GvuZpG6nCdaAuTYg4fzJ0Dfg0wAML1kmvWVVUHHrZA2aEbE/hcGdwyMYnDvl5n3TQO/AbiBzctP2KxLpWzfJTX8z893JBUifllS7DXGVUVoKTHBS8bsmJWsXK4aN8mQz7yngOdhPnNzXmhkGQRRUO1IOx4/Ek7aPKaONSvFC5q3L3UT1Q4WWz4hnqx9JeX8z0NPYSua8vKtdbuh6U=
-  file: "${TRAVIS_BUILD_DIR}/target/ProdriversAPI-1.0-jar-with-dependencies.jar"
+  file: "${TRAVIS_BUILD_DIR}/target/ProdriversAPI-jar-with-dependencies.jar"
   on:
     tags: true
     repo: horgeon/ProdriversAPI
