@@ -1,0 +1,35 @@
+language: java
+
+sudo: false
+
+jdk:
+  - oraclejdk8
+
+env:
+  - secure: "fPYmKPCyPc2bksETt9TyTLjuyUtXhDFyRtULOP7brVTGOG1Jqd2Dak/yhhAN6gOlhe4Q55IZtsQtRu8AQDpUzbrMwkJG0Ub3LlpAvD0aQZKqCdfLZ60dLxmUSnaUu4Psr+emO4NR2Rn17UKww8gM2YpLYYa1nEkfsKOngSYIUVpz3eHlEtGq1Er5t16k8K3GPEeSG32o/Gl5uT1n/J9/gp/uG58NjRUIqhnLtxLMxrdYal0xRdEDN+fgg04h31EVZ4uiSOTamTgFnre1DbaIU5D/2b7995Qahe8PHVxV/cdM3vz0C86u0xqUw6RULUxgkIrIpmcHwq356vm4lhZzr1uVmS6lS8N+Io1Bcl53zhi4txVGkXlONudQA4v4GbpNn2VVRdqHDE3X75Ed4pHkFZhxGSdI2ONz6WH2QJ8yMLxUEH6OfQNbMqKKh/orxmFacmw7ZdtcmV+ucjVyKc04mn4YtCEgAydq8nBdmQ+eRf5sJy0wMikoKUY7VBX0hpqvxD42/ufGJtmpNjpDTzYkb16y2yJrB6V2TYMSrdHpHOw5ymb8RRU+It9wuQPSgxCX5YhkgwQ/m+iHP4j6BHRV2Q/wlKBRXBgY74qTgNk3vkIRuOK952XhaKkqpBP28D2RHfXIKEF/dsJv2sI+QxR1KPHVjZ4fVSZkLdOwYlmo55k="
+
+cache:
+ directories:
+   - $HOME/.m2
+
+before_install:
+  - export MAVEN_SKIP_RC=true
+  - mvn -Xmx32M -v | grep 1.7.0; if [ $? = 0 ]; then export MAVEN_OPTS="-XX:MaxPermSize=240M"; else export MAVEN_OPTS="-XX:MaxMetaspaceSize=240M -XX:CompressedClassSpaceSize=240M"; fi
+  - export MAVEN_OPTS="-Xmx512M $MAVEN_OPTS"
+
+script:
+  - mvn
+
+after_success:
+  - echo '<?xml version="1.0" encoding="UTF-8"?><settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><servers><server><username>ci</username><password>${env.CI_PASSWD}</password><id>horgeon-repo</id></server></servers></settings>' > settings.xml
+  - mvn -s settings.xml deploy
+  - rm settings.xml
+
+deploy:
+  provider: releases
+  api_key:
+    secure: lLWCrJxwo7v4kqhBZdxNtr9LSkbbodB36m6I7sctc6kSSVxRIUldSSXN4lxjYuoe/jCnu7FPRFNox3WlYZgx4IWebStozar7pW+oDDg6gzn8G9GwQPja5ocwH189MNZSRsLEA1oAi7UCjWKioRsRgOkxYRu8B1gMDmOdz3eZkRdfcROw0XOoqOOD0cycirgBoePj567K8w1sV/LnvR4pNRJFUtSxjkc++rymwgUaoiTpnEffq65HirsLfwVzOrj9f0mlpeZigGLoDoR26k0ToaQ9ok5tWhFxA7roQo3jb3A1+73p5np1jg1OcPjfjYaJO1az82+/yQ1qZDMtYcb3nLmURUeCreR7Gq63nrd0Y8u0WdsxNvNFic0zKPeJFC8OlanxrtnegfJuwz1wlSwH2R8+W+j6Kn0ITR+isMEN6ksv7v0sdBtqCa3G/OiOJUnWf/7BcFSg3U+wk/9VCfC223OuA1GvuZpG6nCdaAuTYg4fzJ0Dfg0wAML1kmvWVVUHHrZA2aEbE/hcGdwyMYnDvl5n3TQO/AbiBzctP2KxLpWzfJTX8z893JBUifllS7DXGVUVoKTHBS8bsmJWsXK4aN8mQz7yngOdhPnNzXmhkGQRRUO1IOx4/Ek7aPKaONSvFC5q3L3UT1Q4WWz4hnqx9JeX8z0NPYSua8vKtdbuh6U=
+  file: "${TRAVIS_BUILD_DIR}/target/ProdriversAPI-1.0-jar-with-dependencies.jar"
+  on:
+    tags: true
+    repo: horgeon/ProdriversAPI

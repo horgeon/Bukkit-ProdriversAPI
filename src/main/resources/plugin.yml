@@ -1,0 +1,48 @@
+name: ProdriversAPI
+main: fr.horgeon.prodrivers.api.Main
+version: 1.0
+
+commands:
+    prodriversapi:
+            description: Base command for ProdriversAPI.
+
+    prodriversapi start:
+        description: Starts the integrated HTTP server.
+        permission: prodriversapi.start
+
+    prodriversapi stop:
+            description: Stops completly the integrated HTTP server.
+            permission: prodriversapi.stop
+
+    prodriversapi restart:
+            description: Restarts completly the integrated HTTP server.
+            permission: prodriversapi.restart
+
+    prodriversapi reload:
+        description: Reloads the plugin's configuration.
+        permission: prodriversapi.reload
+
+    prodriversapi addkey:
+                description: Generates a new key pair to the exisintg key pairs list.
+                permission: prodriversapi.addkey
+
+permissions:
+    prodriversapi.start:
+        description: Allows you to start the integrated HTTP server.
+        default: op
+
+    prodriversapi.stop:
+        description: Allows you to stop completly the integrated HTTP server.
+        default: op
+
+    prodriversapi.restart:
+        description: Allows you to restart completly the integrated HTTP server.
+        default: op
+
+    prodriversapi.reload:
+        description: Allows you to reload the configuration.
+        default: op
+
+    prodriversapi.addkeys:
+            description: Allows you to generate a new key pair.
+            default: op
