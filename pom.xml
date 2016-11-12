@@ -19,11 +19,11 @@
 		</repository>
 		<repository>
 			<id>horgeon-repo</id>
-			<url>https://repo.horgeon.fr/artifactory/maven-release/</url>
+			<url>https://repo.horgeon.fr/repository/maven-releases/</url>
 		</repository>
 		<repository>
 			<id>horgeon-repo-snapshot</id>
-			<url>https://repo.horgeon.fr/artifactory/maven-snapshot/</url>
+			<url>https://repo.horgeon.fr/repository/maven-snapshots/</url>
 		</repository>
 	</repositories>
 	<dependencies>
@@ -106,12 +106,12 @@
 		<repository>
 			<id>horgeon-repo</id>
 			<name>horgeon-repo-releases</name>
-			<url>http://repo.horgeon.fr/artifactory/maven-release</url>
+			<url>https://repo.horgeon.fr/repository/maven-releases/</url>
 		</repository>
 		<snapshotRepository>
 			<id>horgeon-repo</id>
 			<name>horgeon-repo-snapshots</name>
-			<url>http://repo.horgeon.fr/artifactory/maven-snapshot</url>
+			<url>https://repo.horgeon.fr/repository/maven-snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 </project>
