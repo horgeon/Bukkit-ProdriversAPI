@@ -6,7 +6,7 @@
 
 	<groupId>fr.horgeon.prodrivers</groupId>
 	<artifactId>ProdriversAPI</artifactId>
-	<version>1.1.1</version>
+	<version>1.1.2-SNAPSHOT</version>
 	<name>Prodrivers API</name>
 	<url>https://horgeon.fr/</url>
 
