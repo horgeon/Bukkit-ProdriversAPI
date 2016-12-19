@@ -26,6 +26,7 @@
 			<url>https://repo.horgeon.fr/repository/maven-snapshots/</url>
 		</repository>
 	</repositories>
+
 	<dependencies>
 		<!--Spigot API-->
 		<dependency>
@@ -70,7 +71,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>3.6.0</version>
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
@@ -80,6 +81,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.0.2</version>
 				<configuration>
 					<archive>
 						<manifest>
@@ -92,7 +94,9 @@
 			</plugin>
 
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.0.0</version>
 				<configuration>
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
